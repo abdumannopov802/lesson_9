@@ -1,0 +1,16 @@
+{% extends "base.html" %} 
+{% block content %}
+
+<div class="card-body">
+    <form method="get">
+        <h2>{{ book.title }} </h2>
+        <p> writen by: <b> {{  book.author }} </p>
+        <hr> 
+        <h4> {{ book.description }} </h4>
+        <hr> 
+        <p> year: {{ book.year }} </p>
+        <a type="button" class="btn btn-outline-danger" href="{%url 'book-list' %}">Back</a>
+    </form>
+</div>
+
+{% endblock %}
