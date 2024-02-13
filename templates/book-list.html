@@ -3,6 +3,7 @@
 <div class="card-body">
     <h4>Book List</h4>
     <table class="table">
+        {% csrf_token %}
         <thead>
             <tr>
                 <th scope="col">Title</th>
@@ -10,6 +11,8 @@
                 <th scope="col">Author</th>
                 <th scope="col">Year</th>
                 <th scope="col">Action</th>
+                <th scope="col">like</th>
+                <th scope="col">dislike</th>
             </tr>
         </thead>
         <tbody>
@@ -21,7 +24,29 @@
                 <td>{{ book.year }}</td>
                 <td><a type="button" class="btn btn-warning" href="/book-update/{{ book.id }}">Update</a>
                     <a type="button" class="btn btn-danger" href="/book-delete/{{ book.id }}">Delete</a>
-                    <a type="button" class="btn btn-danger" href="/book-detail/{{ book.id }}">More</a>
+                    <a type="button" class="btn btn-primary" href="/book-detail/{{ book.id }}">More</a>
+                </td>
+                <td>
+                    <form action="{% url 'like-post' %}" method="POST" class="ui form"> {% csrf_token %}
+                        <input type="hidden" name="post_id" value="{{ book.id }}">
+                        {% if user not in book.liked.all %}
+                            <button type="submit" class="btn btn-success"> like  </button> 
+                        {% else %}
+                            <button type="submit" class="btn btn-danger"> unlike </button>  
+                        {% endif %}
+                        <strong> total likes: {{ book.liked.all.count }} </strong>
+                    </form>
+                </td>
+                <td>
+                    <form action="{% url 'dislike-post' %}" method="POST" class="ui form"> {% csrf_token %}
+                        <input type="hidden" name="post_id" value="{{ book.id }}">
+                        {% if user not in book.disliked.all %}
+                            <button type="submit" class="btn btn-success"> dislike  </button> 
+                        {% else %}
+                            <button type="submit" class="btn btn-danger"> back </button>  
+                        {% endif %}
+                        <strong> total dislikes: {{ book.disliked.all.count }} </strong>
+                    </form>
                 </td>
             </tr>
             {% endfor %}

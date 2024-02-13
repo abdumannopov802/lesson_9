@@ -10,6 +10,10 @@
         <hr> 
         <p> year: {{ book.year }} </p>
         <a type="button" class="btn btn-outline-danger" href="{%url 'book-list' %}">Back</a>
+        <hr>
+        <strong> likes: {{ book.liked.all.count }} </strong> 
+        <br>
+        <strong> dislikes: {{ book.disliked.all.count }} </strong>
     </form>
 </div>
 
